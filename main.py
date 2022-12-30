@@ -4,15 +4,15 @@ import time
 import smtplib
 
 def check_location():
-    my_latitude = 42.126339
-    my_longitude = -70.916420
+    my_latitude = "YOUR_LATITUE"
+    my_longitude = "YOUR_LONGTITUDE"
     
     iss_location = requests.get(url='http://api.open-notify.org/iss-now.json').json()['iss_position']
     iss_lat = float(iss_location['latitude'])
     iss_lgn = float(iss_location['longitude'])
     
     if my_latitude -5 <= iss_lat <= my_latitude + 5 and my_longitude -5 <= iss_lgn <= my_longitude +5:
-        print('You are currently in a good location to watch the satelite!')
+        print('You are currently in a good location to see ISS!')
         return True
     else:
         print('You are out of scope.')
@@ -30,11 +30,10 @@ def check_time():
     
     response = requests.get(url='https://api.sunrise-sunset.org/json',params=parameters)
     response.status_code
+    
+    # time here is based on UTC. You need to convert it to your local time.
     sunrise_time = response.json()['results']['sunrise'].split('T')[1].split(':')[0]
     sunset_time = response.json()['results']['sunset'].split('T')[1].split(':')[0]
-
-    # convert hour time object to integer
-    # time_now = datetime.datetime.utcnow()
     
     time_now = datetime.datetime.now()
     
